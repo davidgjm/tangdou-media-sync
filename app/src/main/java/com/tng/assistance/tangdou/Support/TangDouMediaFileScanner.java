@@ -3,58 +3,62 @@ package com.tng.assistance.tangdou.Support;
 import android.os.Environment;
 import android.util.Log;
 
-import org.apache.commons.io.FilenameUtils;
+import androidx.annotation.NonNull;
+
+import com.tng.assistance.tangdou.dto.MediaFileSet;
+
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import dagger.hilt.android.scopes.ServiceScoped;
 
-@ServiceScoped
 public final class TangDouMediaFileScanner {
     public static final String TAG = TangDouMediaFileScanner.class.getSimpleName();
-    private static final Set<File> mediaFiles = new HashSet<>();
 
-    public List<File> scan() {
-        doScan();
-        return Collections.unmodifiableList(new ArrayList<>(mediaFiles));
-    }
-
-
-    private void doScan() {
-        List<File> sourceFolders = loadSourceFolders();
-        FileFilter filter =
-                FileFilterUtils.suffixFileFilter("mp4", IOCase.INSENSITIVE)
-                        .or(FileFilterUtils.suffixFileFilter("mp3", IOCase.INSENSITIVE));
-        for (File folder : sourceFolders) {
-            if (!folder.exists() || folder.isFile()) {
-                Log.i(TAG, "Candidate does not exist or is a file" + folder);
-                continue;
-            }
-            mediaFiles.addAll(Arrays.asList(folder.listFiles(filter)));
+    public MediaFileSet scan(@NonNull String baseDir) {
+        Objects.requireNonNull(baseDir, "Base directory cannot be null!");
+        if (baseDir.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid base directory!");
         }
-        Log.i(TAG, mediaFiles.size() + " media files scanned");
+        return doScan(baseDir);
     }
 
-    private List<File> loadSourceFolders() {
-        String[] candidates = {
-                "CCDownload"
-        };
+    public MediaFileSet scan(@NonNull File baseDir) {
+        Objects.requireNonNull(baseDir, "Base directory cannot be null!");
+        return doScan(baseDir);
+    }
 
-        List<File> sourceFolders = new ArrayList<>();
-        for (String candidate :
-                candidates) {
-            sourceFolders.add(new File(Environment.getExternalStorageDirectory(), candidate));
+
+    private MediaFileSet doScan(File basePath) {
+        if (!basePath.exists() || basePath.isFile()) {
+            Log.e(TAG, "Invalid base directory: " + basePath);
+            throw new IllegalArgumentException("Invalid base directory!");
         }
-        return sourceFolders;
+        Set<File> files = new HashSet<>(Arrays.asList(basePath.listFiles(MEDIA_FILE_FILTER)));
+
+        Log.i(TAG, files.size() + " media files scanned for base dir " + basePath.getPath());
+        MediaFileSet fileSet = new MediaFileSet(basePath, files);
+        Log.d(TAG, String.format("Scan result for %s. %s", basePath, files));
+        return fileSet;
     }
+
+    private MediaFileSet doScan(String baseDir) {
+        File basePath = new File(Environment.getExternalStorageDirectory(), baseDir);
+        return doScan(basePath);
+    }
+
+    private static final FileFilter MEDIA_FILE_FILTER =
+            FileFilterUtils.suffixFileFilter("mp4", IOCase.INSENSITIVE)
+                    .or(FileFilterUtils.suffixFileFilter("mp3", IOCase.INSENSITIVE))
+            ;
 }

@@ -2,6 +2,7 @@ package com.tng.assistance.tangdou.Support;
 
 import android.app.Application;
 
+import com.tng.assistance.tangdou.dto.MediaFileSet;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
 import com.tng.assistance.tangdou.services.SettingsService;
 

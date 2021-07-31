@@ -11,8 +11,7 @@
         android:id="@+id/item_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#8BC34A"
-        android:text="@string/element_text"
+        android:text="@string/label_file_list_desc"
         android:textColor="#004D40"
         android:textStyle="bold" />
 

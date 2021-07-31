@@ -5,29 +5,20 @@
     <string name="label_file_list_desc">Detected files</string>
 
 
-    <!-- Preference Titles -->
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="prefs_app_header">App Settings</string>
     <string name="prefs_settings_copy_mode">Copy Mode</string>
-    <string name="prefs_settings_target_folder_name">Target Folder Name</string>
     <string name="prefs_emulated_mode_support">Support emulated mode</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="element_text">Element text</string>
-    <string name="grid_layout_manager">Grid Layout Manager</string>
-    <string name="linear_layout_manager">Linear Layout Manager</string>
+    <string name="prefs_settings_source_folder_name">Source Folder Path</string>
+    <string name="default_source_folder" translatable="false">CCDownload</string>
+
+    <string name="prefs_settings_target_folder_name">Target Folder Path</string>
+    <string name="default_target_folder">Exported_Media_Files</string>
+    <string name="message_no_files_found">No files found!</string>
+    <string name="message_sync_successful">Files sync successful!</string>
+    <string name="action_ok">OK</string>
+
+
 </resources>

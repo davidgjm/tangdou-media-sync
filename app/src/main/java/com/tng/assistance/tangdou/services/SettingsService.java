@@ -35,6 +35,13 @@ public class SettingsService {
     }
 
 
+    public File getSourceFolder() {
+        String basePath = preferences.getString(resources.getString(R.string.prefs_settings_source_folder_name), resources.getString(R.string.default_source_folder));
+        Log.d(TAG, "Source folder name: "+ basePath);
+        return new File(Environment.getExternalStorageDirectory(), basePath);
+    }
+
+
     public File getTargetFolder() {
         String folderName = preferences.getString(resources.getString(R.string.prefs_settings_target_folder_name), resources.getString(R.string.default_target_folder));
         Log.d(TAG, "Target folder name: "+ folderName);

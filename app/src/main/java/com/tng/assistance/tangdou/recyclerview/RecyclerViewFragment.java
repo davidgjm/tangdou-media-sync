@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tng.assistance.tangdou.R;
+import com.tng.assistance.tangdou.dto.DataSetFilter;
 import com.tng.assistance.tangdou.dto.MediaFileSet;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -28,12 +30,18 @@ import io.reactivex.rxjava3.functions.Predicate;
 @AndroidEntryPoint
 public class RecyclerViewFragment extends Fragment {
     public static final String TAG = RecyclerViewFragment.class.getSimpleName();
+    private final DataSetFilter<MediaFileSet> dataSetFilter;
+
     @Inject
     AndroidBus androidBus;
 
     private RecyclerView recyclerView;
     private FileListAdapter fileListAdapter;
     private List<String> dataSet;
+
+    public RecyclerViewFragment(DataSetFilter<MediaFileSet> dataSetFilter) {
+        this.dataSetFilter = dataSetFilter;
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     @SuppressWarnings({"unchecked"})
@@ -42,10 +50,11 @@ public class RecyclerViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         dataSet = new ArrayList<>();
-        androidBus.subscribe(fileListFilter, o -> {
-            MediaFileSet fileSet = (MediaFileSet) o;
+        androidBus.subscribe(dataSetFilter.getFilter(), o -> {
+            MediaFileSet fileSet = dataSetFilter.getDataType().cast(o);;
+            Objects.requireNonNull(fileSet, "Media file set is null!");
             for (File f : fileSet.getFiles()) {
-                if (!dataSet.contains(f)) {
+                if (!dataSet.contains(f.getName())) {
                     dataSet.add(f.getName());
                     fileListAdapter.notifyItemInserted(dataSet.size()-1);
                 }

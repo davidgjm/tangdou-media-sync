@@ -4,9 +4,20 @@
     <PreferenceCategory app:title="@string/prefs_app_header">
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/default_copy_mode"
             android:key="pref_copy_mode"
             android:title="@string/prefs_settings_copy_mode" />
+
+        <EditTextPreference
+            android:contextClickable="false"
+            android:defaultValue="@string/default_source_folder"
+            android:key="pref_source_folder"
+            android:selectAllOnFocus="false"
+            android:enabled="false"
+            android:singleLine="true"
+            android:title="@string/prefs_settings_source_folder_name"
+            app:useSimpleSummaryProvider="true"
+            />
 
         <EditTextPreference
             android:contextClickable="false"
@@ -17,39 +28,11 @@
             android:title="@string/prefs_settings_target_folder_name"
             app:useSimpleSummaryProvider="true"
             />
+
         <SwitchPreference
             android:defaultValue="@bool/default_support_emulated_mode"
             android:key="pref_support_emulated_mode"
             android:title="@string/prefs_emulated_mode_support" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>

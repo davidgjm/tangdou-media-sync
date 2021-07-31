@@ -3,6 +3,7 @@ package com.tng.assistance.tangdou.dto;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,12 @@ import lombok.RequiredArgsConstructor;
 public final class MediaFileSet {
     private final File baseDir;
     private final Set<File> files;
+    private boolean isTargetFiles;
 
+    public MediaFileSet(File baseDir) {
+        this.baseDir = baseDir;
+        this.files = new HashSet<>();
+    }
 
     public Set<File> getFiles() {
         return Collections.unmodifiableSet(files);
@@ -27,5 +33,9 @@ public final class MediaFileSet {
         List<File> items = new ArrayList<>(files);
         Collections.sort(items);
         return Collections.unmodifiableList(items);
+    }
+
+    public boolean isEmpty() {
+        return files.isEmpty();
     }
 }
