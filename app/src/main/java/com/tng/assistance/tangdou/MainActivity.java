@@ -6,16 +6,22 @@ import android.os.Bundle;
 
 import com.tng.assistance.tangdou.Support.TangDouMediaFileScanner;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
+import com.tng.assistance.tangdou.recyclerview.FileListAdapter;
+import com.tng.assistance.tangdou.recyclerview.RecyclerViewFragment;
 import com.tng.assistance.tangdou.services.MediaFileSyncService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import org.reactivestreams.Subscription;
@@ -36,7 +42,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_FILE_LIST = "com.tng.assistance.tangdou.FILE_LIST";
     public static final String[] EXTERNAL_PERMS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     };
@@ -51,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     AndroidBus androidBus;
 
+    private RecyclerView sourceFileListView;
+    private FileListAdapter sourceFileListAdapter;
+    private List<String> sourceFiles;
+
+    private RecyclerView targetFileListView;
+    private FileListAdapter targetFileListAdapter;
+    private List<String> targetFiles;
+
+    private TextView sourceBaseLocation, targetBaseLocation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +79,46 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Display icon in the toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
+        sourceBaseLocation = findViewById(R.id.sourceBaseDir);
+        targetBaseLocation = findViewById(R.id.targetBaseDir);
+
+//        initSourceFileView();
+//        initTargetFileView();
+
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            RecyclerViewFragment fragment = new RecyclerViewFragment();
+            transaction.replace(R.id.sourceFileListView, fragment);
+            transaction.commit();
+        }
     }
+
+
+//    private void initSourceFileView() {
+//        sourceFileListView = findViewById(R.id.sourceFileListView);
+//        sourceFileListView.setLayoutManager(new LinearLayoutManager(this));
+//        sourceFileListView.scrollToPosition(0);
+//
+////        sourceFiles = new ArrayList<>();
+////        sourceFileListAdapter = new FileListAdapter(sourceFiles);
+////        sourceFileListView.setAdapter(sourceFileListAdapter);
+//    }
+//
+//
+//    private void initTargetFileView() {
+//        targetFileListView = findViewById(R.id.targetFileListView);
+//        targetFileListView.setLayoutManager(new LinearLayoutManager(this));
+//        targetFileListView.scrollToPosition(0);
+//
+//        targetFiles = new ArrayList<>();
+//        targetFileListAdapter = new FileListAdapter(targetFiles);
+//        targetFileListView.setAdapter(targetFileListAdapter);
+//    }
 
     @Override
     protected void onDestroy() {
@@ -90,26 +142,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showFileList(View view) {
-        Intent intent = new Intent(this, DisplayFileListActivity.class);
         loadFiles();
-        startActivity(intent);
+//        Intent intent = new Intent(this, DisplayFileListActivity.class);
+//        startActivity(intent);
     }
 
     private void loadFiles() {
         disposable = Observable.fromSupplier(() -> syncService.scanOnly())
                 .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(paths -> {
-                    Log.d("MAIN", "Handling paths " + paths);
-                    androidBus.publish(paths);
+                .subscribe(mediaFileSet -> {
+                    sourceBaseLocation.setText(mediaFileSet.getBaseDir().getPath());
+                    androidBus.publish(mediaFileSet);
                 })
+
         ;
-    }
 
-
-    public void showSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+//        sourceFiles = syncService.scanOnly();
+//        sourceFiles = new ArrayList<>();
+//        sourceFileListAdapter = new FileListAdapter(sourceFiles);
+//        sourceFileListView.setAdapter(sourceFileListAdapter);
     }
 
     public void showSettings(MenuItem item) {

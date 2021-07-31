@@ -3,22 +3,24 @@ package com.tng.assistance.tangdou.services;
 import android.util.Log;
 
 import com.tng.assistance.tangdou.Support.TangDouMediaFileScanner;
+import com.tng.assistance.tangdou.dto.MediaFileSet;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.scopes.ActivityScoped;
 import dagger.hilt.android.scopes.ServiceScoped;
 
-//@ActivityScoped
 public class MediaFileSyncService {
-    private static final String TAG = "MediaFileSyncService";
+    private static final String TAG = MediaFileSyncService.class.getSimpleName();
 
     private final SettingsService settingsService;
     private final TangDouMediaFileScanner fileScanner;
@@ -38,28 +40,23 @@ public class MediaFileSyncService {
         }
     }
 
-    public void synchronize() {
+    public final MediaFileSet synchronize() {
         Log.i(TAG, "Attempting to synchronize media files for tang dou");
         File targetFolder = settingsService.getTargetFolder();
         setupBaseDir();
-        List<File> mediaFiles = fileScanner.scan();
-        doSyncFiles(mediaFiles);
+        MediaFileSet fileSet = fileScanner.scan().get(0);
+        return doSyncFiles(fileSet);
     }
 
-    public ArrayList<String> scanOnly() {
-        ArrayList<String> files = new ArrayList<>();
-        List<File> mediaFiles = fileScanner.scan();
-        for (File f : mediaFiles) {
-            files.add(f.getAbsolutePath());
-        }
-        return files;
+    public MediaFileSet scanOnly() {
+        return fileScanner.scan().get(0);
     }
 
 
-    private void doSyncFiles(List<File> sourceFiles) {
+    private MediaFileSet doSyncFiles(MediaFileSet sourceFileSet) {
         File targetBaseDir = settingsService.getTargetFolder();
-        for (File mediaFile :
-                sourceFiles) {
+        Set<File> targets = new HashSet<>();
+        for (File mediaFile : sourceFileSet.getFiles()) {
             if (mediaFile.isDirectory()) {
                 //file is a directory
                 continue;
@@ -76,7 +73,8 @@ public class MediaFileSyncService {
             } catch (IOException e) {
                 Log.e(TAG, "Failed to copy file. " + e.getMessage());
             }
-
+            targets.add(target);
         }
+        return new MediaFileSet(targetBaseDir, targets);
     }
 }

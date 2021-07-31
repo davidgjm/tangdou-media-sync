@@ -49,7 +49,7 @@ public class DisplayFileListActivity extends AppCompatActivity {
 
 
     private void renderMediaFiles() {
-        androidBus.subscribe(new Consumer<Object>() {
+        androidBus.subscribe(fileListFilter, new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Throwable {
                 ArrayList<String> files = (ArrayList<String>) o;
@@ -60,7 +60,7 @@ public class DisplayFileListActivity extends AppCompatActivity {
                 }
 
             }
-        }, fileListFilter);
+        });
     }
 
     private static Predicate<Object> fileListFilter = o -> o instanceof ArrayList;

@@ -31,7 +31,7 @@ public final class AndroidBus {
         return INSTANCE;
     }
 
-    public Disposable subscribe(Consumer<Object> consumer, Predicate<Object> filter) {
+    public Disposable subscribe(Predicate<Object> filter, Consumer<Object> consumer) {
         Objects.requireNonNull(consumer);
         return subject
                 .filter(filter)
