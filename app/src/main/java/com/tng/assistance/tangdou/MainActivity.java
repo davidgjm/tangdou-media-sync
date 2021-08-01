@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.tng.assistance.tangdou.dto.DataSetFilter;
@@ -14,11 +15,16 @@ import com.tng.assistance.tangdou.recyclerview.FileListAdapter;
 import com.tng.assistance.tangdou.recyclerview.RecyclerViewFragment;
 import com.tng.assistance.tangdou.services.MediaFileSyncService;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.IconCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +45,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static final String[] EXTERNAL_PERMS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     };
@@ -63,16 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         requestForPermission();
 
-
-        // Find the toolbar view and set as ActionBar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Display icon in the toolbar
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+        initToolbar();
 
         sourceBaseLocation = findViewById(R.id.sourceBaseDir);
         targetBaseLocation = findViewById(R.id.targetBaseDir);
@@ -80,18 +78,37 @@ public class MainActivity extends AppCompatActivity {
         syncButton.setOnClickListener(this::syncFiles);
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
             RecyclerViewFragment sourceListFragment = buildSourceListFragment();
             transaction.replace(R.id.sourceFileListView, sourceListFragment);
 
             RecyclerViewFragment targetListFragment = buildTargetListFragment();
             transaction.replace(R.id.targetFileListView, targetListFragment);
+
             transaction.commit();
         }
+
+        //scan media files on startup
+        doScanMediaFiles();
+    }
+
+    private void initToolbar() {
+        // Find the toolbar view and set as ActionBar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Display icon in the toolbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayUseLogoEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setLogo(R.drawable.baseline_groups_amber_50_48dp);
+
     }
 
     private RecyclerViewFragment buildSourceListFragment() {
-        DataSetFilter<MediaFileSet> filter = new DataSetFilter<MediaFileSet>(MediaFileSet.class, o -> {
+        DataSetFilter<MediaFileSet> filter = new DataSetFilter<>(MediaFileSet.class, o -> {
             if (o == null) {
                 return false;
             }
@@ -105,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private RecyclerViewFragment buildTargetListFragment() {
-        DataSetFilter<MediaFileSet> filter = new DataSetFilter<MediaFileSet>(MediaFileSet.class, o -> {
+        DataSetFilter<MediaFileSet> filter = new DataSetFilter<>(MediaFileSet.class, o -> {
             if (o == null) {
                 return false;
             }
@@ -134,6 +151,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                showSettings(item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void requestForPermission() {
 
         requestPermissions(EXTERNAL_PERMS, EXTERNAL_REQUEST);
@@ -141,18 +169,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scanMediaFiles(View view) {
-        disposable = Observable.fromArray(syncService.scanSourceFiles(), syncService.scanTargetFiles())
-                .subscribeOn(Schedulers.io())
-                .subscribe(mediaFileSet -> {
-                    if (mediaFileSet.isTargetFiles()) {
-                        targetBaseLocation.setText(mediaFileSet.getBaseDir().getPath());
-                    } else {
-                        sourceBaseLocation.setText(mediaFileSet.getBaseDir().getPath());
-                    }
-                    androidBus.publish(mediaFileSet);
-                })
-
-        ;
+        doScanMediaFiles();
     }
 
     public void syncFiles(View view) {
@@ -162,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mediaFileSet -> {
                     if (!mediaFileSet.isEmpty()) {
-                        androidBus.publish(mediaFileSet);
+                        doScanMediaFiles();
                         showMessage(view, getResources().getString(R.string.message_sync_successful));
                     } else {
                         showMessage(view, getResources().getString(R.string.message_no_files_found));
@@ -177,12 +194,37 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    private void doScanMediaFiles() {
+        disposable = Observable.fromArray(syncService.scanSourceFiles(), syncService.scanTargetFiles())
+                .subscribeOn(Schedulers.io())
+                .subscribe(mediaFileSet -> {
+                    Log.i(TAG, String.format("Received %d %s files", mediaFileSet.getFiles().size(), mediaFileSet.isTargetFiles() ? "target" : "source"));
+                    if (mediaFileSet.isTargetFiles()) {
+                        targetBaseLocation.setText(mediaFileSet.getBaseDir().getPath());
+                    } else {
+                        sourceBaseLocation.setText(mediaFileSet.getBaseDir().getPath());
+                    }
+                    androidBus.publish(mediaFileSet);
+                })
+
+        ;
+    }
+
     private void showMessage(View view, CharSequence message) {
         Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.action_ok, v -> {
                 })
                 .setAnchorView(targetBaseLocation)
-                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+//                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .show();
+
+//
+//        AlertDialog alertDialog= new MaterialAlertDialogBuilder(this)
+//                .setMessage(message)
+//                .setTitle("DONE")
+//                .setIcon(R.drawable.baseline_done_black_48dp)
+//                .setNeutralButton("OK",null)
+//                .show();
     }
 }

@@ -14,7 +14,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,10 +26,11 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="96dp"
-        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:theme="@style/Widget.AppCompat.Button.Borderless.Colored"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/scanBtn"
-        app:srcCompat="@android:drawable/ic_popup_sync" />
+        app:srcCompat="@drawable/baseline_drive_file_move_white_48dp" />
 
     <ImageButton
         android:id="@+id/scanBtn"
@@ -37,13 +38,14 @@
         android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:background="@color/design_default_color_secondary"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="scanMediaFiles"
+        android:theme="@style/Widget.AppCompat.Button.Borderless"
         app:layout_constraintEnd_toStartOf="@+id/syncBtn"
         app:layout_constraintHorizontal_bias="0.279"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+        app:srcCompat="@drawable/baseline_image_search_white_48dp" />
 
 
     <TextView
@@ -53,7 +55,10 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/prefs_settings_source_folder_name"
+        android:drawableStart="@drawable/ic_tangdou_logo"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:drawableTintMode="screen"
+        android:text="@string/prefs_label_source_folder_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +70,10 @@
         android:layout_height="24dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="24dp"
-        android:text="@string/prefs_settings_target_folder_name"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:drawableTint="#00838F"
+        android:text="@string/prefs_label_target_folder_name"
+        app:drawableStartCompat="@android:drawable/stat_notify_sdcard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,18 +87,22 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="20"
+        android:background="?android:attr/detailsElementBackground"
+        android:backgroundTintMode="src_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sourceBaseDir"
-        app:layout_constraintTop_toBottomOf="@+id/sourceBaseDir" >
+        app:layout_constraintTop_toBottomOf="@+id/sourceBaseDir">
 
     </FrameLayout>
+
     <FrameLayout
         android:id="@+id/targetFileListView"
-        android:layout_width="397dp"
-        android:layout_height="226dp"
+        android:layout_width="381dp"
+        android:layout_height="225dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="?android:attr/detailsElementBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/targetBaseDir"

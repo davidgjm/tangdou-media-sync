@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/label_file_list_desc"
-        android:textColor="#004D40"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 </FrameLayout>

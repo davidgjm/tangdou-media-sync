@@ -14,27 +14,20 @@ import lombok.RequiredArgsConstructor;
 @Data
 public final class MediaFileSet {
     private final File baseDir;
-    private final Set<File> files;
+    private final List<File> files;
     private boolean isTargetFiles;
 
     public MediaFileSet(File baseDir) {
         this.baseDir = baseDir;
-        this.files = new HashSet<>();
+        this.files = new ArrayList<>();
     }
 
-    public Set<File> getFiles() {
-        return Collections.unmodifiableSet(files);
-    }
-
-    public List<File> asList() {
+    public List<File> getFiles() {
         if (files.isEmpty()) {
             return Collections.emptyList();
         }
-        List<File> items = new ArrayList<>(files);
-        Collections.sort(items);
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(files);
     }
-
     public boolean isEmpty() {
         return files.isEmpty();
     }

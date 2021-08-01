@@ -25,7 +25,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.functions.Predicate;
 
 @AndroidEntryPoint
 public class RecyclerViewFragment extends Fragment {
@@ -37,7 +36,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FileListAdapter fileListAdapter;
-    private List<String> dataSet;
+    private final List<File> dataSet = new ArrayList<>();
 
     public RecyclerViewFragment(DataSetFilter<MediaFileSet> dataSetFilter) {
         this.dataSetFilter = dataSetFilter;
@@ -49,14 +48,19 @@ public class RecyclerViewFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dataSet = new ArrayList<>();
         androidBus.subscribe(dataSetFilter.getFilter(), o -> {
-            MediaFileSet fileSet = dataSetFilter.getDataType().cast(o);;
+            MediaFileSet fileSet = dataSetFilter.getDataType().cast(o);
+            ;
             Objects.requireNonNull(fileSet, "Media file set is null!");
+
+            boolean changed = dataSet.retainAll(fileSet.getFiles());
+            if (changed) {
+                fileListAdapter.notifyDataSetChanged();
+            }
             for (File f : fileSet.getFiles()) {
-                if (!dataSet.contains(f.getName())) {
-                    dataSet.add(f.getName());
-                    fileListAdapter.notifyItemInserted(dataSet.size()-1);
+                if (!dataSet.contains(f)) {
+                    dataSet.add(f);
+                    fileListAdapter.notifyItemInserted(dataSet.size() - 1);
                 }
             }
         });
@@ -73,13 +77,11 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.scrollToPosition(0);
 
-        fileListAdapter = new FileListAdapter(dataSet);
+        fileListAdapter = new FileListAdapter(dataSet, getResources());
         recyclerView.setAdapter(fileListAdapter);
 
 
         return rootView;
     }
-
-    private static final Predicate<Object> fileListFilter = o -> o instanceof MediaFileSet;
 
 }

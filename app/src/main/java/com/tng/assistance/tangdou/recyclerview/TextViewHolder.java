@@ -14,7 +14,6 @@ public class TextViewHolder extends GenericViewHolder<TextView> {
 
     public TextViewHolder(@NonNull View itemView, @NonNull Supplier<TextView> viewSupplier) {
         super(itemView);
-//        this.textView = itemView.findViewById(R.id.item_text_view);
         this.textView=viewSupplier.get();
     }
 

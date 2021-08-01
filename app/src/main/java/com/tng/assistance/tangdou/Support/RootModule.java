@@ -2,6 +2,8 @@ package com.tng.assistance.tangdou.Support;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+
 import com.tng.assistance.tangdou.dto.MediaFileSet;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
 import com.tng.assistance.tangdou.services.SettingsService;
@@ -30,8 +32,8 @@ public class RootModule {
     }
 
     @Provides
-    public static TangDouMediaFileScanner mediaFileScanner() {
-        return new TangDouMediaFileScanner();
+    public static TangDouMediaFileScanner mediaFileScanner(@NonNull SettingsService settingsService) {
+        return new TangDouMediaFileScanner(settingsService);
     }
 
     @Provides

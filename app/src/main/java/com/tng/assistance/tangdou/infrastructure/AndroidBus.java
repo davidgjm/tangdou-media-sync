@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.subjects.ReplaySubject;
 
 @Singleton
 public final class AndroidBus {
-    private final BehaviorSubject<Object> subject = BehaviorSubject.create();
+    private final ReplaySubject<Object> subject = ReplaySubject.create();
     private static AndroidBus INSTANCE;
     private AndroidBus() {
     }

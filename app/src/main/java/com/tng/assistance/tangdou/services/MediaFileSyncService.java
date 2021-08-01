@@ -11,7 +11,9 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -59,8 +61,7 @@ public class MediaFileSyncService {
             result = fileScanner.scan(basePath);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Target file scan error! " + e.getMessage());
-            Set<File> testFiles = new HashSet<>();
-            result = new MediaFileSet(basePath, testFiles);
+            result = new MediaFileSet(basePath, new ArrayList<>());
         }
         result.setTargetFiles(true);
         return result;
@@ -78,7 +79,7 @@ public class MediaFileSyncService {
 
     private MediaFileSet doSyncFiles(MediaFileSet sourceFileSet) {
         File targetBaseDir = settingsService.getTargetFolder();
-        Set<File> targets = new HashSet<>();
+        List<File> targets = new ArrayList<>();
         for (File mediaFile : sourceFileSet.getFiles()) {
             if (mediaFile.isDirectory()) {
                 //file is a directory

@@ -3,22 +3,23 @@
     <string name="action_settings">Settings</string>
     <string name="button_label_scan">Scan</string>
     <string name="label_file_list_desc">Detected files</string>
+    <string name="action_ok">OK</string>
+
+    <string name="message_no_files_found">No files found!</string>
+    <string name="message_sync_successful">Files sync successful!</string>
 
 
     <!-- Sync Preferences -->
     <string name="prefs_app_header">App Settings</string>
-    <string name="prefs_settings_copy_mode">Copy Mode</string>
-    <string name="prefs_emulated_mode_support">Support emulated mode</string>
+    <string name="prefs_label_copy_mode">Copy Mode</string>
+    <string name="prefs_label_emulated_mode_support">Support emulated mode</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <string name="prefs_settings_source_folder_name">Source Folder Path</string>
+    <string name="prefs_label_source_folder_name">Source Folder Path</string>
     <string name="default_source_folder" translatable="false">CCDownload</string>
 
-    <string name="prefs_settings_target_folder_name">Target Folder Path</string>
+    <string name="prefs_label_target_folder_name">Target Folder Path</string>
     <string name="default_target_folder">Exported_Media_Files</string>
-    <string name="message_no_files_found">No files found!</string>
-    <string name="message_sync_successful">Files sync successful!</string>
-    <string name="action_ok">OK</string>
-
+    <string name="prefs_label_media_types">Supported Media Types</string>
 
 </resources>

@@ -1,5 +1,11 @@
 package com.tng.assistance.tangdou.recyclerview;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tng.assistance.tangdou.R;
 
+import java.io.File;
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Observable;
 
 public class FileListAdapter extends RecyclerView.Adapter<TextViewHolder>{
     public static final String TAG = FileListAdapter.class.getSimpleName();
-    private List<String> dataItems;
+    private final List<File> dataItems;
+    private final Resources resources;
 
-    public FileListAdapter(List<String> dataItems) {
+    public FileListAdapter(List<File> dataItems, Resources resources) {
         this.dataItems = dataItems;
+        this.resources = resources;
     }
 
 
@@ -40,10 +47,17 @@ public class FileListAdapter extends RecyclerView.Adapter<TextViewHolder>{
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        String item = dataItems.get(position);
-        Log.d(TAG, "showing item text: " + item);
-        viewHolder.getContentView().setText(item);
+        File fileItem = dataItems.get(position);
+        Log.d(TAG, "showing file: " + fileItem);
+        String fileName = fileItem.getName();
 
+        TextView textView = viewHolder.getContentView();
+        textView.setText(fileName);
+
+//        Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(fileItem.getPath(), MediaStore.Images.Thumbnails.MICRO_KIND);
+//        Drawable d = new BitmapDrawable(this.resources, thumbnail);
+//        d.setBounds(4,0,0,0);
+//        textView.setCompoundDrawablesRelative(d, null, null, null);
     }
 
     @Override

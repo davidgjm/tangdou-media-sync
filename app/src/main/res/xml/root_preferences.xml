@@ -5,34 +5,41 @@
 
         <SwitchPreference
             android:defaultValue="@bool/default_copy_mode"
-            android:key="pref_copy_mode"
-            android:title="@string/prefs_settings_copy_mode" />
+            android:key="@string/prefs_key_copy_mode"
+            android:title="@string/prefs_label_copy_mode" />
 
         <EditTextPreference
             android:contextClickable="false"
             android:defaultValue="@string/default_source_folder"
-            android:key="pref_source_folder"
+            android:key="@string/prefs_key_source_folder"
             android:selectAllOnFocus="false"
             android:enabled="false"
             android:singleLine="true"
-            android:title="@string/prefs_settings_source_folder_name"
+            android:title="@string/prefs_label_source_folder_name"
             app:useSimpleSummaryProvider="true"
             />
 
         <EditTextPreference
             android:contextClickable="false"
             android:defaultValue="@string/default_target_folder"
-            android:key="pref_target_folder"
+            android:key="@string/prefs_key_target_folder"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/prefs_settings_target_folder_name"
+            android:title="@string/prefs_label_target_folder_name"
             app:useSimpleSummaryProvider="true"
             />
 
         <SwitchPreference
             android:defaultValue="@bool/default_support_emulated_mode"
-            android:key="pref_support_emulated_mode"
-            android:title="@string/prefs_emulated_mode_support" />
+            android:key="@string/prefs_key_emulated_mode"
+            android:title="@string/prefs_label_emulated_mode_support" />
+
+        <MultiSelectListPreference
+            android:defaultValue="@array/media_types"
+            android:entries="@array/media_types"
+            android:entryValues="@array/media_types"
+            android:key="@string/prefs_key_media_type"
+            android:title="@string/prefs_label_media_types" />
 
     </PreferenceCategory>
 </PreferenceScreen>
