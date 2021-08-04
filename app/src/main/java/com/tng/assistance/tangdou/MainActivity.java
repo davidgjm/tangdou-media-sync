@@ -1,6 +1,7 @@
 package com.tng.assistance.tangdou;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayUseLogoEnabled(true);
 //        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setLogo(R.drawable.baseline_groups_amber_50_48dp);
+        actionBar.setLogo(R.drawable.baseline_groups_white_48dp);
 
     }
 
@@ -151,11 +152,15 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 showSettings(item);
+                return true;
+            case R.id.action_about:
+                showAbout(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -194,6 +199,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void showAbout(MenuItem item) {
+        Intent intent = new Intent(this, DeviceAndApplicationActivity.class);
+        startActivity(intent);
+    }
 
     private void doScanMediaFiles() {
         disposable = Observable.fromArray(syncService.scanSourceFiles(), syncService.scanTargetFiles())

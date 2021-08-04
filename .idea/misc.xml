@@ -10,7 +10,10 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.34427083333333336" />
         <entry key="../../../.gradle/caches/transforms-2/files-2.1/f1d98b42bff883d919c95e91bc1d8c67/material-1.4.0/res/layout/material_clock_display_divider.xml" value="0.413671875" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_device_and_application.xml" value="0.58359375" />
+        <entry key="app/src/main/res/layout/activity_device_and_system_info.xml" value="0.283984375" />
+        <entry key="app/src/main/res/layout/activity_display_file_list.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="1.0" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.288671875" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/recycler_view_frag.xml" value="0.32916666666666666" />

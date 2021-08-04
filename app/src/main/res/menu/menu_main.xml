@@ -9,10 +9,10 @@
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 
-<!--    <item-->
-<!--        android:id="@+id/miProfile"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@android:drawable/ic_popup_sync"-->
-<!--        android:title="Profile"-->
-<!--        app:showAsAction="ifRoom|withText"></item>-->
+    <item
+        android:id="@+id/action_about"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="About"
+        app:showAsAction="ifRoom" />
 </menu>

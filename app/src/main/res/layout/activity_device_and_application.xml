@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".DeviceAndApplicationActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_about"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingStart="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_about"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Info"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="77dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="117dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/product_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:textStyle="bold"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="4dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="136dp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            tools:layout_conversion_absoluteHeight="1dp"
+            tools:layout_conversion_absoluteWidth="296dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="38dp" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Screen real size"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="98dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="39dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/screen_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:textStyle="bold"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="4dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="58dp" />
+
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            tools:layout_conversion_absoluteHeight="1dp"
+            tools:layout_conversion_absoluteWidth="296dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android Release"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="101dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="78dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/release_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:textStyle="bold"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="4dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="97dp" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            tools:layout_conversion_absoluteHeight="1dp"
+            tools:layout_conversion_absoluteWidth="296dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="116dp" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Storage Information"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="125dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/storage_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:textStyle="bold"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="4dp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="19dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_back_white_48dp"
+        android:contentDescription="TODO" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
