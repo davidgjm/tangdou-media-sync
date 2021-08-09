@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".DeviceAndApplicationActivity">
+    tools:context=".ui.DeviceAndApplicationActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_about"
@@ -118,36 +118,6 @@
             tools:layout_editor_absoluteX="32dp"
             tools:layout_editor_absoluteY="97dp" />
 
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_conversion_absoluteHeight="1dp"
-            tools:layout_conversion_absoluteWidth="296dp"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="116dp" />
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Storage Information"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_conversion_absoluteWidth="125dp"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/storage_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="4dp"
-            android:textStyle="bold"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_conversion_absoluteWidth="4dp"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="19dp" />
 
     </LinearLayout>
 

@@ -11,8 +11,7 @@
     </string-array>
 
     <string-array name="media_types" >
-        <item>mp4</item>
-        <item>mpg</item>
-        <item>mp3</item>
+        <item>video/mp4</item>
+        <item>audio/mpeg</item>
     </string-array>
 </resources>

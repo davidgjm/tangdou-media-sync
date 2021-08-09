@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">糖豆豆</string>
     <string name="prefs_app_header">App 设置</string>
-    <string name="default_target_folder">糖豆音视频</string>
     <string name="prefs_label_source_folder_name">糖豆媒体文件夹</string>
     <string name="action_ok">确定</string>
     <string name="prefs_label_target_folder_name">存储卡位置</string>

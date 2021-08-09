@@ -1,4 +1,4 @@
-package com.tng.assistance.tangdou.recyclerview;
+package com.tng.assistance.tangdou.ui.recyclerview;
 
 import android.view.View;
 
@@ -10,5 +10,5 @@ public abstract class GenericViewHolder<V extends View> extends RecyclerView.Vie
         super(itemView);
     }
 
-    abstract V getContentView();
+    public abstract V getContentView();
 }

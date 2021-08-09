@@ -17,4 +17,5 @@
     <dimen name="text_detais_size_medium">16sp</dimen>
     <dimen name="elevation_small">4dp</dimen>
     <dimen name="elevation_medium">8dp</dimen>
+    <dimen name="image_button_size">72dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 package com.tng.assistance.tangdou.Support;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,12 +17,14 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,10 +34,12 @@ import dagger.hilt.android.scopes.ServiceScoped;
 
 public final class TangDouMediaFileScanner {
     public static final String TAG = TangDouMediaFileScanner.class.getSimpleName();
+    private final Context context;
     private final SettingsService settingsService;
 
     @Inject
-    public TangDouMediaFileScanner(SettingsService settingsService) {
+    public TangDouMediaFileScanner(Context context, SettingsService settingsService) {
+        this.context=context;
         this.settingsService = settingsService;
     }
 
@@ -57,6 +62,7 @@ public final class TangDouMediaFileScanner {
             Log.e(TAG, "Invalid base directory: " + basePath);
             throw new IllegalArgumentException("Invalid base directory!");
         }
+
         FileFilter filter = buildFilter();
         List<File> files = new ArrayList<>(Arrays.asList(basePath.listFiles(filter)));
         Collections.sort(files, (f1, f2) -> f1.getName().compareToIgnoreCase(f2.getName()));
@@ -70,7 +76,6 @@ public final class TangDouMediaFileScanner {
         File basePath = new File(Environment.getExternalStorageDirectory(), baseDir);
         return doScan(basePath);
     }
-
 
     private FileFilter buildFilter() {
         Set<String> mediaTypes = settingsService.getMediaTypes();

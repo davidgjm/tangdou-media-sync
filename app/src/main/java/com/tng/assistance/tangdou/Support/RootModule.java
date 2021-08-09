@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.tng.assistance.tangdou.dto.MediaFileSet;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
+import com.tng.assistance.tangdou.services.FileScanService;
+import com.tng.assistance.tangdou.services.FileScanServiceImpl;
 import com.tng.assistance.tangdou.services.SettingsService;
 
 import javax.inject.Singleton;
@@ -32,8 +34,13 @@ public class RootModule {
     }
 
     @Provides
-    public static TangDouMediaFileScanner mediaFileScanner(@NonNull SettingsService settingsService) {
-        return new TangDouMediaFileScanner(settingsService);
+    public static TangDouMediaFileScanner mediaFileScanner(@NonNull SettingsService settingsService, Application application) {
+        return new TangDouMediaFileScanner(application, settingsService);
+    }
+
+    @Provides
+    public static FileScanService fileScanService(@NonNull SettingsService settingsService) {
+        return new FileScanServiceImpl(settingsService);
     }
 
     @Provides

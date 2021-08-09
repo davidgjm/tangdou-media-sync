@@ -3,8 +3,17 @@
     <bool name="default_copy_mode">true</bool>
     <bool name="default_support_emulated_mode">false</bool>
 
+    <string name="default_source_folder" translatable="false">CCDownload</string>
+    <string name="default_target_folder" translatable="false">00糖豆音视频</string>
+    <string name="default_source_root_uri" translatable="false">content://com.android.externalstorage.documents/tree/primary%3ACCDownload</string>
+    <string name="default_target_root_uri" translatable="false">content://com.android.externalstorage.documents/tree/primary%3A</string>
+
+    <string name="shared_prefs_file_data" translatable="false">prefs_settings</string>
     <string name="prefs_key_copy_mode" translatable="false">pref_copy_mode</string>
+    <string name="prefs_key_source_root_uri" translatable="false">pref_source_root</string>
     <string name="prefs_key_source_folder" translatable="false">pref_source_folder</string>
+
+    <string name="prefs_key_target_root_uri" translatable="false">pref_target_root</string>
     <string name="prefs_key_target_folder" translatable="false">pref_target_folder</string>
     <string name="prefs_key_emulated_mode" translatable="false">pref_support_emulated_mode</string>
     <string name="prefs_key_media_type" translatable="false">pref_media_types</string>

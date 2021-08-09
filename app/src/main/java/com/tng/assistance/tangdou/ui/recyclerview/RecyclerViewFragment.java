@@ -1,4 +1,4 @@
-package com.tng.assistance.tangdou.recyclerview;
+package com.tng.assistance.tangdou.ui.recyclerview;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tng.assistance.tangdou.R;
 import com.tng.assistance.tangdou.dto.DataSetFilter;
+import com.tng.assistance.tangdou.dto.DocumentFileSet;
 import com.tng.assistance.tangdou.dto.MediaFileSet;
 import com.tng.assistance.tangdou.infrastructure.AndroidBus;
 
@@ -29,16 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class RecyclerViewFragment extends Fragment {
     public static final String TAG = RecyclerViewFragment.class.getSimpleName();
-    private final DataSetFilter<MediaFileSet> dataSetFilter;
+    private final DataSetFilter<DocumentFileSet> dataSetFilter;
 
     @Inject
     AndroidBus androidBus;
 
     private RecyclerView recyclerView;
-    private FileListAdapter fileListAdapter;
-    private final List<File> dataSet = new ArrayList<>();
+    private DocumentFileListAdapter fileListAdapter;
+    private final List<DocumentFile> dataSet = new ArrayList<>();
 
-    public RecyclerViewFragment(DataSetFilter<MediaFileSet> dataSetFilter) {
+    public RecyclerViewFragment(DataSetFilter<DocumentFileSet> dataSetFilter) {
         this.dataSetFilter = dataSetFilter;
     }
 
@@ -49,7 +51,7 @@ public class RecyclerViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         androidBus.subscribe(dataSetFilter.getFilter(), o -> {
-            MediaFileSet fileSet = dataSetFilter.getDataType().cast(o);
+            DocumentFileSet fileSet = dataSetFilter.getDataType().cast(o);
             ;
             Objects.requireNonNull(fileSet, "Media file set is null!");
 
@@ -57,7 +59,7 @@ public class RecyclerViewFragment extends Fragment {
             if (changed) {
                 fileListAdapter.notifyDataSetChanged();
             }
-            for (File f : fileSet.getFiles()) {
+            for (DocumentFile f : fileSet.getFiles()) {
                 if (!dataSet.contains(f)) {
                     dataSet.add(f);
                     fileListAdapter.notifyItemInserted(dataSet.size() - 1);
@@ -77,7 +79,7 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.scrollToPosition(0);
 
-        fileListAdapter = new FileListAdapter(dataSet, getResources());
+        fileListAdapter = new DocumentFileListAdapter(dataSet, getContext(), getResources());
         recyclerView.setAdapter(fileListAdapter);
 
 

@@ -1,11 +1,6 @@
-package com.tng.assistance.tangdou.recyclerview;
+package com.tng.assistance.tangdou.ui.recyclerview;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

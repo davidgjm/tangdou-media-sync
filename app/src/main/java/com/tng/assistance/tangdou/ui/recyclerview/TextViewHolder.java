@@ -1,12 +1,10 @@
-package com.tng.assistance.tangdou.recyclerview;
+package com.tng.assistance.tangdou.ui.recyclerview;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Supplier;
-
-import com.tng.assistance.tangdou.R;
 
 
 public class TextViewHolder extends GenericViewHolder<TextView> {
@@ -19,7 +17,7 @@ public class TextViewHolder extends GenericViewHolder<TextView> {
 
 
     @Override
-    TextView getContentView() {
+    public TextView getContentView() {
         return textView;
     }
 }

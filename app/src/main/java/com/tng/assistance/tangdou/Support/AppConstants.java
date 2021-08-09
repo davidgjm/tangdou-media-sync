@@ -6,6 +6,6 @@ public final class AppConstants {
     }
 
 
-    public static String NOTIFICATIN_CHANNEL_ID = "TANG_DOU_COPY_TOOL";
+    public static String NOTIFICATION_CHANNEL_ID = "TANG_DOU_COPY_TOOL";
 
 }
