@@ -37,7 +37,7 @@ public class FileScanServiceImpl implements FileScanService {
         Set<String> supportedTypes = settingsService.getMediaTypes();
         return Stream.of(directory.listFiles())
                 .filter(DocumentFile::isFile)
-//                .filter(f -> supportedTypes.contains(f.getType()))
+                .filter(f -> supportedTypes.contains(f.getType()))
                 .peek(f -> Log.i(TAG, "scan: file "+ f.getUri().getPath()))
                 .collect(Collectors.toList())
                 ;
